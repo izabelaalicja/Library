@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using Rollbar;
 
 namespace Library
 {
@@ -16,6 +17,9 @@ namespace Library
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
+                RollbarLocator.RollbarInstance.Configure(new RollbarConfig("20781e2bc8944eb99542194bd726d194"));
+                RollbarLocator.RollbarInstance.Info("Rollbar is configured properly.");
+
                 logger.Debug("init main");
                 CreateWebHostBuilder(args).Build().Run();
             }
